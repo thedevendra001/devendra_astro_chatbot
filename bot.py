@@ -17,7 +17,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # /help command
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text("Help Command:
+    await update.message.reply_text("Help Command: Yeh bot astrology related sawalon ke jawab deta hai. /start se shuru karein.")
 /start - Shuru karo
 /help - Madad lo")
 
