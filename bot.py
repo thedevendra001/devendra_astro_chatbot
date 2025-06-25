@@ -2,8 +2,9 @@ import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# Replace this with your actual token
-TOKEN = "7392937646:AAHnaXYgAQVQeqVh5AcJCKslvVWKuy9ku5s"
+# ✅ Securely store token as environment variable (best practice for Render)
+import os
+TOKEN = os.environ.get("BOT_TOKEN")  # Replace with your token directly for local testing if needed
 
 # Logging setup
 logging.basicConfig(
@@ -17,15 +18,26 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # /help command
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text("Help Command: Yeh bot astrology related sawalon ke jawab deta hai. /start se shuru karein.")
-/start - Shuru karo
-await update.message.reply_text("/start - Bot shuru karo\n/help - Madad lo")
+    await update.message.reply_text(
+        "🆘 Help Commands:\n"
+        "/start - Bot shuru karo\n"
+        "/help - Madad lo\n"
+        "/about - Bot ke baare mein"
+    )
+
+# /about command
+async def about_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text("Main ek Vedic Astrology chatbot hoon, banaya gaya Devendra Agrawal ke dwara 🔮")
 
 # Main application runner
 def main():
+    if not TOKEN:
+        raise ValueError("BOT_TOKEN environment variable not set!")
+
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("help", help_command))
+    app.add_handler(CommandHandler("about", about_command))
     app.run_polling()
 
 if __name__ == "__main__":
